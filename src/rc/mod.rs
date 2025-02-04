@@ -66,7 +66,7 @@ let odds_under_ten = gen!({
 
 # let mut test = Vec::new();
 for num in odds_under_ten {
-    println!("{}", num);
+    println!("{num}");
     # test.push(num);
 }
 # assert_eq!(test, [1, 3, 5, 7, 9]);

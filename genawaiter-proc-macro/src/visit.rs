@@ -4,6 +4,7 @@ use syn::{
     parse2,
     visit_mut::{self, VisitMut},
     Expr,
+    Stmt,
 };
 
 pub struct YieldReplace;
@@ -23,6 +24,23 @@ impl VisitMut for YieldReplace {
             }
         }
 
-        visit_mut::visit_expr_mut(self, expr)
+        visit_mut::visit_expr_mut(self, expr);
+    }
+
+    fn visit_stmt_mut(&mut self, stmt: &mut Stmt) {
+        if let Stmt::Macro(m) = stmt {
+            if m.mac.path.segments.iter().any(|seg| seg.ident == "yield_") {
+                let tkns: TokenStream2 = syn::parse2(m.mac.tokens.clone())
+                    .expect("parse of TokensStream failed");
+
+                let co_call = quote! {
+                    yield_!(@__impl => __private_co_arg__, #tkns);
+                };
+                let cc: Stmt = parse2(co_call).expect("parse of Expr failed");
+                *stmt = cc;
+            }
+        }
+
+        visit_mut::visit_stmt_mut(self, stmt);
     }
 }

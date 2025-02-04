@@ -25,14 +25,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         let counter = gen!({
             for num in 0..10 {
                 // Perform some fallible operation, and yield the result (or the error)
-                let string = yield_!(process(num));
+                let _string = yield_!(process(num));
             }
         });
 
         for result in counter {
             // Check each item for errors, and bail early if we hit one
             let result = result?;
-            println!("{}", result);
+            println!("{result}");
         }
         Ok(())
     }
@@ -44,7 +44,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
 
         // If there's no error, do some work and return a value
-        Ok(format!(":{}:", num))
+        Ok(format!(":{num}:"))
     }
 
     main()

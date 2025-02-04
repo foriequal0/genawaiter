@@ -16,7 +16,7 @@ use genawaiter::sync::{Gen, GenBoxed};
 
 fn main() {
     for n in countdown(10) {
-        println!("{}", n);
+        println!("{n}");
     }
 }
 

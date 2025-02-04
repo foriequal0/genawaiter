@@ -2,7 +2,7 @@
 
 [package]
 name = "genawaiter"
-version = "0.99.1"
+version = "0.99.2"
 authors = ["John Simon <john@whatisaph.one>"]
 edition = "2018"
 license = "MIT"
@@ -13,10 +13,10 @@ readme = "README-crates-io.md"
 keywords = ["generator", "yield", "coroutine", "async", "await"]
 categories = ["asynchronous", "concurrency", "rust-patterns"]
 include = ["Cargo.toml", "README-crates-io.md", "src/**/*.rs"]
-rust-version = "1.45"
+rust-version = "1.70"
 
 [dependencies]
-futures-core = { version = "0.3.1", optional = true }
+futures-core = { version = "0.3.31", optional = true }
 genawaiter-proc-macro = { version = "0.99.1", path = "./genawaiter-proc-macro", optional = true }
 genawaiter-macro = { version = "0.99.1", path = "./genawaiter-macro" }
 
@@ -24,7 +24,7 @@ genawaiter-macro = { version = "0.99.1", path = "./genawaiter-macro" }
 members = ["genawaiter-macro", "genawaiter-proc-macro"]
 
 [dev-dependencies]
-futures = "0.3.1"
+futures = "0.3.31"
 once_cell = "1.3.1"
 rustversion = "1.0.2"
 trybuild = "1"

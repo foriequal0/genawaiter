@@ -141,7 +141,7 @@ impl<A: Airlock> Co<A> {
                 panic!(
                     "`yield_` should not be used after the generator completes. The \
                      `Co` object should have been dropped by now."
-                )
+                );
             }
             Next::Empty | Next::Resume(()) => {}
         }
