@@ -13,7 +13,7 @@ readme = "README-crates-io.md"
 keywords = ["generator", "yield", "coroutine", "async", "await"]
 categories = ["asynchronous", "concurrency", "rust-patterns"]
 include = ["Cargo.toml", "README-crates-io.md", "src/**/*.rs"]
-rust-version = "1.45"
+rust-version = "1.70"
 
 [dependencies]
 futures-core = { version = "0.3.31", optional = true }
