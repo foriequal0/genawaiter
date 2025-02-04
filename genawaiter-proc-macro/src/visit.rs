@@ -24,7 +24,7 @@ impl VisitMut for YieldReplace {
             }
         }
 
-        visit_mut::visit_expr_mut(self, expr)
+        visit_mut::visit_expr_mut(self, expr);
     }
 
     fn visit_stmt_mut(&mut self, stmt: &mut Stmt) {
@@ -41,6 +41,6 @@ impl VisitMut for YieldReplace {
             }
         }
 
-        visit_mut::visit_stmt_mut(self, stmt)
+        visit_mut::visit_stmt_mut(self, stmt);
     }
 }

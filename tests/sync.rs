@@ -47,7 +47,7 @@ fn sync_proc_macro_fn() {
     }
     let gen = Gen::new(odds);
     let res = gen.into_iter().collect::<Vec<_>>();
-    assert_eq!(vec![1, 3, 5, 7, 9], res)
+    assert_eq!(vec![1, 3, 5, 7, 9], res);
 }
 
 #[cfg(feature = "proc_macro")]
@@ -63,7 +63,7 @@ fn sync_proc_macro_closure() {
         }
     }));
     let res = gen.into_iter().collect::<Vec<_>>();
-    assert_eq!(vec![1, 3, 5, 7, 9], res)
+    assert_eq!(vec![1, 3, 5, 7, 9], res);
 }
 
 #[cfg(feature = "proc_macro")]
@@ -80,7 +80,7 @@ fn sync_proc_macro_fn_method_call() {
     }
     let gen = genawaiter::sync::Gen::new(odds);
     let res = gen.into_iter().collect::<Vec<_>>();
-    assert_eq!(vec![1, 3, 5, 7, 9], res)
+    assert_eq!(vec![1, 3, 5, 7, 9], res);
 }
 
 #[cfg(feature = "proc_macro")]
@@ -96,7 +96,7 @@ fn sync_convenience_macro() {
         }
     });
     let res = g.into_iter().collect::<Vec<_>>();
-    assert_eq!(vec![1, 3, 5, 7, 9], res)
+    assert_eq!(vec![1, 3, 5, 7, 9], res);
 }
 
 #[cfg(feature = "proc_macro")]

@@ -35,7 +35,7 @@ let odd_numbers_less_than_ten = gen!({
 
 // Generators can be used as ordinary iterators.
 for num in odd_numbers_less_than_ten {
-    println!("{}", num);
+    println!("{num}");
 }
 ```
 
