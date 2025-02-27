@@ -52,7 +52,7 @@ let_gen!(odds_under_ten, {
 
 # let mut test = Vec::new();
 for num in odds_under_ten {
-    println!("{}", num);
+    println!("{num}");
     # test.push(num);
 }
 # assert_eq!(test, [1, 3, 5, 7, 9]);
@@ -466,11 +466,11 @@ mod tests {
             // cannot be dropped early.
             #[allow(clippy::drop_ref)]
             drop(gen);
-            assert_eq!(flag.load(Ordering::SeqCst), false);
+            assert!(!flag.load(Ordering::SeqCst));
         }
         // After the block above ends, the generator goes out of scope and is dropped,
         // which drops the incomplete future, which drops `_set_on_drop`, which sets the
         // flag.
-        assert_eq!(flag.load(Ordering::SeqCst), true);
+        assert!(flag.load(Ordering::SeqCst));
     }
 }

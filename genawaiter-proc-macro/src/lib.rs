@@ -47,9 +47,9 @@ pub fn stack_producer(input: TokenStream) -> TokenStream {
     YieldReplace.visit_expr_block_mut(&mut input);
     // for some reason parsing as a PatType (correct for closures) fails
     // the only way around is to destructure.
-    let arg = match parse_str::<FnArg>(stack::CO_ARG) {
-        Ok(FnArg::Typed(x)) => x,
-        _ => abort_call_site!("string Pat parse failed Co<...>"),
+    let Ok(FnArg::Typed(arg)) = parse_str::<FnArg>(stack::CO_ARG)
+    else {
+        abort_call_site!("string Pat parse failed Co<...>")
     };
 
     let tokens = quote! { |#arg| async move #input };
@@ -80,9 +80,9 @@ pub fn sync_producer(input: TokenStream) -> TokenStream {
 
     YieldReplace.visit_expr_block_mut(&mut input);
     // for some reason parsing as a PatType (correct for closures) fails
-    let arg = match parse_str::<FnArg>(sync::CO_ARG) {
-        Ok(FnArg::Typed(x)) => x,
-        _ => abort_call_site!("string Pat parse failed Co<...>"),
+    let Ok(FnArg::Typed(arg)) = parse_str::<FnArg>(sync::CO_ARG)
+    else {
+        abort_call_site!("string Pat parse failed Co<...>")
     };
 
     let tokens = quote! { |#arg| async move #input };
@@ -113,9 +113,9 @@ pub fn rc_producer(input: TokenStream) -> TokenStream {
 
     YieldReplace.visit_expr_block_mut(&mut input);
     // for some reason parsing as a PatType (correct for closures) fails
-    let arg = match parse_str::<FnArg>(rc::CO_ARG) {
-        Ok(FnArg::Typed(x)) => x,
-        _ => abort_call_site!("string Pat parse failed Co<...>"),
+    let Ok(FnArg::Typed(arg)) = parse_str::<FnArg>(rc::CO_ARG)
+    else {
+        abort_call_site!("string Pat parse failed Co<...>")
     };
 
     let tokens = quote! { |#arg| async move #input };
@@ -161,17 +161,17 @@ fn add_coroutine_arg(func: &mut ItemFn, co_ty: &str) {
             }
         }
     });
-    if !co_arg_found {
-        let co_arg: FnArg = match parse_str::<FnArg>(co_ty) {
-            Ok(s) => s,
-            Err(err) => abort_call_site!(format!("invalid type for Co yield {}", err)),
-        };
-        func.sig.inputs.push_value(co_arg)
-    } else {
+    if co_arg_found {
         abort!(
             func.sig.span(),
             "A generator producer cannot accept any arguments. Instead, consider \
              using a closure and capturing the values you need.",
         )
     }
+
+    let co_arg: FnArg = match parse_str::<FnArg>(co_ty) {
+        Ok(s) => s,
+        Err(err) => abort_call_site!(format!("invalid type for Co yield {}", err)),
+    };
+    func.sig.inputs.push_value(co_arg);
 }

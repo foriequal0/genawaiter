@@ -163,7 +163,7 @@ receives them from the future returned by `yield_`.
 let mut printer = gen!({
     loop {
         let string = yield_!(());
-        println!("{}", string);
+        println!("{string}");
     }
 });
 printer.resume_with("hello");
@@ -259,6 +259,7 @@ resume argument type to `()`, but in a `Coroutine` it can be anything.
 #![cfg_attr(feature = "nightly", feature(async_closure))]
 #![warn(future_incompatible, rust_2018_compatibility, rust_2018_idioms, unused)]
 #![warn(missing_docs, clippy::cargo, clippy::pedantic)]
+#![allow(clippy::unused_async, clippy::let_underscore_future)]
 #![cfg_attr(feature = "strict", deny(warnings))]
 
 #[cfg(test)]
@@ -317,7 +318,6 @@ pub use genawaiter_proc_macro::rc_producer;
 pub use genawaiter_proc_macro::stack_producer;
 
 mod core;
-mod ext;
 #[macro_use]
 mod macros;
 mod ops;
